@@ -1,26 +1,460 @@
 @import "tailwindcss";
 
+@theme {
+  --font-display: var(--font-caveat);
+  --font-body: var(--font-jakarta);
+}
+
+/* ── Root Variables ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --blue: #3B2FC9;
+  --purple: #8B2FC9;
+  --teal: #3ECDC8;
+  --grad: linear-gradient(135deg, #3B2FC9 0%, #8B2FC9 55%, #3ECDC8 100%);
+  --grad2: linear-gradient(90deg, #3B2FC9 0%, #8B2FC9 100%);
+  --bg: #F7F7FC;
+  --white: #FFFFFF;
+  --ink: #18182B;
+  --ink2: #45455E;
+  --ink3: #8E8EA8;
+  --border: #E3E3F0;
+  --blue-soft: #EEF0FF;
+  --teal-soft: #E6FAFA;
+
+  /* legacy brand vars */
+  --brand-navy: #101C84;
+  --brand-purple: #82157A;
+  --brand-teal: #24898B;
+  --brand-blue: #3B2FC9;
+  --brand-indigo: #8B2FC9;
+  --brand-amber: #3ECDC8;
+  --surface-dark: #0A0A0F;
+  --surface-dark-2: #111118;
+  --surface-light: #F8F7FF;
+  --radius: 14px;
+  --shadow: 0 4px 24px rgba(59, 47, 201, 0.09);
+  --shadow-lg: 0 16px 48px rgba(59, 47, 201, 0.14);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Base Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ── Selection ── */
+::selection {
+  background: #C5B5FF;
+  color: #18182B;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--purple);
+  border-radius: 2px;
+}
+
+/* ── Glass ── */
+.glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.glass-dark {
+  background: rgba(10, 10, 20, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Gradient text ── */
+.gradient-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200%;
+  animation: gradShift 4s ease infinite;
+}
+
+.gradient-text-blue {
+  background: var(--grad2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Fade-up utility ── */
+.fade-up {
+  animation: fadeUp 0.65s cubic-bezier(.22, .68, 0, 1.15) both;
+}
+
+.d1 {
+  animation-delay: .05s;
+}
+
+.d2 {
+  animation-delay: .15s;
+}
+
+.d3 {
+  animation-delay: .28s;
+}
+
+.d4 {
+  animation-delay: .42s;
+}
+
+.d5 {
+  animation-delay: .58s;
+}
+
+/* ── Tag ── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Section helpers ── */
+.section-dark {
+  background: var(--surface-dark);
+  color: #ffffff;
+}
+
+.section-light {
+  background: var(--surface-light);
+  color: var(--surface-dark);
+}
+
+.section-mid {
+  background: #F0EFFE;
+}
+
+/* ── Glow orb ── */
+.glow-orb {
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* ── Animated underline ── */
+.animated-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--grad2);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animated-underline:hover::after,
+.animated-underline.active::after {
+  width: 100%;
+}
+
+/* ── Ticker ── */
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 22s linear infinite;
+  width: max-content;
+}
+
+/* ── AI bubble word ── */
+.ai-bubble {
+  position: absolute;
+  background: var(--grad2);
+  color: #fff;
+  border-radius: 100px;
+  padding: 4px 13px;
+  font-weight: 600;
+  font-size: 12px;
+  animation: bubbleUp 3.2s ease forwards;
+  opacity: 0;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(59, 47, 201, 0.3);
+}
+
+/* ── Floating chip ── */
+.float-chip {
+  animation: floatA 3.5s ease-in-out infinite;
+}
+
+.float-chip-b {
+  animation: floatB 4.25s ease-in-out infinite;
+}
+
+.float-chip-c {
+  animation: floatC 5s ease-in-out infinite;
+}
+
+/* ── Pulse ring ── */
+.pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--purple);
+  animation: pulseRing 1.8s ease-out infinite;
+}
+
+/* ── Noise ── */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+  z-index: 9999;
+}
+
+/* ===================== KEYFRAMES ===================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatA {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(1deg);
+  }
+}
+
+@keyframes floatB {
+
+  0%,
+  100% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+
+  50% {
+    transform: translateY(-22px) rotate(-1.5deg);
+  }
+}
+
+@keyframes floatC {
+
+  0%,
+  100% {
+    transform: translateY(-8px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-26px) rotate(1deg);
+  }
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bubbleUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+
+  12% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(-55px) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.85);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes gradShift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes grain {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-5%, -10%);
+  }
+
+  20% {
+    transform: translate(-15%, 5%);
+  }
+
+  30% {
+    transform: translate(7%, -25%);
+  }
+
+  40% {
+    transform: translate(-5%, 25%);
+  }
+
+  50% {
+    transform: translate(-15%, 10%);
+  }
+
+  60% {
+    transform: translate(15%, 0%);
+  }
+
+  70% {
+    transform: translate(0%, 15%);
+  }
+
+  80% {
+    transform: translate(3%, 35%);
+  }
+
+  90% {
+    transform: translate(-10%, 10%);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-24px) rotate(3deg);
+  }
+}
+
+@keyframes orb-pulse {
+
+  0%,
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.6;
+  }
+
+  33% {
+    transform: scale(1.15) translate(30px, -20px);
+    opacity: 0.8;
+  }
+
+  66% {
+    transform: scale(0.95) translate(-20px, 15px);
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
 }
