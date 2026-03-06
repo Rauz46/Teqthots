@@ -4,10 +4,10 @@ import { useState, useEffect, useRef } from 'react';
 
 /* ─── Film-strip card data ─── */
 const STRIP = [
-    { tag: 'AI Explainer', title: 'Making AI Make Sense', tagBg: 'rgba(62,205,200,0.1)', tagColor: '#2BA8A4', tagBorder: 'rgba(62,205,200,0.2)' },
-    { tag: 'Brand Story', title: 'Behind the Build', tagBg: 'rgba(139,47,201,0.08)', tagColor: '#8B2FC9', tagBorder: 'rgba(139,47,201,0.15)' },
-    { tag: 'Tech Trends', title: "What's Hot in SaaS", tagBg: 'rgba(59,47,201,0.08)', tagColor: '#3B2FC9', tagBorder: 'rgba(59,47,201,0.15)' },
-    { tag: 'Feature Launch', title: 'The Drop', tagBg: 'linear-gradient(90deg, rgba(59,47,201,0.1), rgba(62,205,200,0.1))', tagColor: '#6B5ED4', tagBorder: 'rgba(99,82,210,0.2)' },
+    { tag: 'Startup Life', title: 'Corporate Confessions', videoId: 'L8ib0Y4VKYU', tagBg: 'rgba(59,47,201,0.08)', tagColor: '#3B2FC9', tagBorder: 'rgba(59,47,201,0.15)' },
+    { tag: 'AI & SaaS', title: 'ChatGPT History', videoId: 'uBzZAAjEySk', tagBg: 'rgba(62,205,200,0.1)', tagColor: '#2BA8A4', tagBorder: 'rgba(62,205,200,0.2)' },
+    { tag: 'Sales Tech', title: 'Sales Quiz Challenge', videoId: 'PTcZeW620Sk', tagBg: 'rgba(139,47,201,0.08)', tagColor: '#8B2FC9', tagBorder: 'rgba(139,47,201,0.15)' },
+    { tag: 'Workplace', title: 'Red Flag or Green Flag', videoId: 'Ua-pzrr4aUA', tagBg: 'linear-gradient(90deg, rgba(59,47,201,0.1), rgba(62,205,200,0.1))', tagColor: '#6B5ED4', tagBorder: 'rgba(99,82,210,0.2)' },
 ];
 
 const f = 'Plus Jakarta Sans, sans-serif';
@@ -184,7 +184,7 @@ export default function FeaturedWork() {
                         {/* Embed */}
                         <div style={{ position: 'relative', paddingBottom: '52%', height: 0 }}>
                             <iframe
-                                src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1"
+                                src="https://www.youtube.com/embed/zwhRON7SIPU?rel=0&modestbranding=1"
                                 title="TeqThots Featured Work"
                                 allowFullScreen
                                 allow={iframeAllow}
@@ -205,11 +205,11 @@ export default function FeaturedWork() {
                                 fontFamily: f, fontSize: '10px', fontWeight: 600,
                                 letterSpacing: '0.08em', textTransform: 'uppercase' as const,
                                 padding: '3px 10px', borderRadius: '100px',
-                            }}>Product Demo</span>
+                            }}>Behind the build</span>
                             <span style={{
                                 fontFamily: f, fontWeight: 700,
                                 fontSize: '0.95rem', color: '#fff',
-                            }}>Your Product's Best First Impression</span>
+                            }}>Inside Piqual - Building the Future</span>
                         </div>
                     </div>
 
@@ -327,7 +327,7 @@ export default function FeaturedWork() {
                                     {/* Embed */}
                                     <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
                                         <iframe
-                                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1"
+                                            src={`https://www.youtube.com/embed/${card.videoId}?rel=0&modestbranding=1`}
                                             title={card.title}
                                             allowFullScreen
                                             allow={iframeAllow}
